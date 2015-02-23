@@ -7,8 +7,13 @@ help: Makefile
 .SECONDARY:
 
 ## all: Upload votes to production db
-all: rating_pid.csv
+all: rating_pid.csv rating_pid_url.csv
 	python rating_csv2mongo.py
+
+## clean: Removes all intermediate files
+clean:
+	rm rating_pid.csv
+	rm rating_pid_url.csv
 
 ## rating_pid.csv: extracts list of ratings from sql dump
 rating_pid.csv: w4grb.sql
