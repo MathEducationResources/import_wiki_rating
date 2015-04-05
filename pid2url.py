@@ -28,6 +28,6 @@ if __name__ == '__main__':
 
     df = pd.read_csv('rating_pid.csv')
     known_urls = {}
-    df['url'] = df['pageID'].apply(make_url)
-    df = df[df.url != '']
-    df.to_csv('rating_pid_url.csv')
+    df['URL'] = df['pageID'].apply(make_url)
+    df = df[df.URL != '']
+    df.to_csv('rating_pid_url.csv', index=False)
