@@ -44,7 +44,7 @@ if __name__ == '__main__':
     with open("rating_pid_url.csv", "r") as f:
         next(f)
         for line in f:
-            userID, pageID, rating_100, time, q_url = line.split(',')[1:]
+            userID, pageID, rating_100, time, q_url = line.split(',')
             rating_100 = int(rating_100)
             rating_5 = (rating_100 - 1) / 20 + 1  # 1-20 -> 1, 81-100 -> 5
             questionID = url2questionID(q_url)
@@ -57,6 +57,6 @@ if __name__ == '__main__':
                 votes.insert(vote)
             except DuplicateKeyError:
                 print("Duplicate entry found - skipping.")
-                break
+                # break
 
     print("Total number of votes: %d" % votes.count())
