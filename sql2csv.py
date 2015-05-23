@@ -1,6 +1,3 @@
-import datetime
-
-
 def obtain_raw(sql_dump):
     '''Rewrites SQL dump to list of votes'''
     with open(sql_dump, 'r') as fin:
@@ -24,6 +21,4 @@ if __name__ == '__main__':
     with open('rating_pid.csv', 'w') as fout:
         fout.write('userID,pageID,rating,time\n')
         for uid, pid, rating, userIP, raw_time in list_of_tuples:
-            fout.write('%s,%s,%s,%s\n' %
-                       (uid, pid, rating,
-                        datetime.datetime.utcfromtimestamp(float(raw_time))))
+            fout.write('%s,%s,%s,%s\n' % (uid, pid, rating, raw_time))

@@ -19,6 +19,7 @@ def make_url(pid):
         else:
             url = ''
         known_urls[requestURL] = url
+        print(url)
     return url
 
 

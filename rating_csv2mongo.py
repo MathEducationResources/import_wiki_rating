@@ -1,5 +1,6 @@
 from pymongo import MongoClient, DESCENDING
 from pymongo.errors import DuplicateKeyError
+import datetime
 
 
 def get_merdb(prod=False):
@@ -34,9 +35,14 @@ def url2questionID(url):
 
 
 if __name__ == '__main__':
-    db = get_merdb(prod=True)
+    db = get_merdb(prod=False)
     print("Available collections: %s" % db.collection_names())
     votes = db.votes
+    # index prevents duplicate entries if userID, questionID, time are all same
+    # if you want to overwrite anyway you can use the flag below
+    overwrite = False
+    if overwrite:
+        votes.remove(multi=True)  # will be replaced by delete_many() in 3.0
     votes.create_index([("userID", DESCENDING),
                         ("questionID", DESCENDING),
                         ("time", DESCENDING)],
@@ -50,7 +56,7 @@ if __name__ == '__main__':
             questionID = url2questionID(q_url)
             vote = {"userID": userID,
                     "rating": rating_5,
-                    "time": time,
+                    "time": datetime.datetime.fromtimestamp(int(time)),
                     "questionID": questionID
                     }
             try:
